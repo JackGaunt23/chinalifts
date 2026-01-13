@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The China Effect (Marketing + Guide)
+
+Static marketing + ungated guide website built with **Next.js (App Router)**, **TypeScript**, and **Tailwind CSS**.
+
+- Dark theme (black background)
+- Mobile-first (ideal for a TikTok bio link)
+- No database
+- No accounts
+- No payments yet ("Buy Now" routes directly to the guide)
+
+## Routes
+
+- `/` — Landing / marketing page
+- `/preview` — Preview (intro + sample workouts)
+- `/guide` — Full guide (ungated)
 
 ## Getting Started
 
-First, run the development server:
+### Install
+
+```bash
+npm install
+```
+
+### Run dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Where to edit content
 
-## Learn More
+### Theme tokens
 
-To learn more about Next.js, take a look at the following resources:
+- `src/theme/tokens.ts` — centralized style tokens (colors, spacing, typography, radii, shadows)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Global styling
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `src/app/globals.css` — global dark theme + small utilities/animations
 
-## Deploy on Vercel
+### Guide content
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `src/data/guideContent.ts` — guide sections + workout tables
+  - Replace `TODO:` blocks with exact PDF text and keep the same section order.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### FAQ
+
+- `src/data/faqData.ts`
+
+### Testimonials
+
+- `src/data/testimonialsData.ts`
+
+## How PDF pages map to the website
+
+Recommended approach:
+
+1. Each PDF page (or spread) becomes a `GuideSection` inside `src/data/guideContent.ts`.
+2. Use:
+   - `type: 'text'` for paragraphs + callouts
+   - `type: 'workout'` for workout days (tables)
+3. Keep copy consistent with the PDF. Do not invent major claims.
+
+## Components
+
+Reusable components live in `src/components/`:
+
+- Layout: `Section`, `Divider`, `DividerWithLabel`, `Footer`
+- Typography: `Heading`, `Subheading`, `Paragraph`
+- UI: `Button`, `Badge`, `Card`, `CalloutBox`
+- Guide: `WorkoutTable`, `FAQ`, `ImagePlaceholder`
+
+## Notes / TODO
+
+- Add PDF-derived images into `public/` and replace `ImagePlaceholder` components.
+- Add meta images + social preview image.
+- Later: payment + gating.
